@@ -6,9 +6,9 @@ fun main(){
     runBlocking {
         val query = Query()
 
-        launch { query.queryTweets("is cancelled", limit = 5) }
-        println("Hello")
-        println("World")
+        launch { query.queryTweets("\"is cancelled\" FROM:daftlimmy", limit = 20) }
     }
+
+    println("Done")
 
 }
