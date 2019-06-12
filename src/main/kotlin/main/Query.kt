@@ -39,8 +39,8 @@ class Query : AutoCloseable {
             header("User-Agent", USER_AGENTS)
         }
 
-        val response = if (pos != null) {
-            Klaxon().parse<TwitterJsonResponse>(htmlContent)
+        val response: TwitterJsonResponse? = if (pos != null) {
+            Klaxon().parse(htmlContent)
         } else {
             TwitterJsonResponse(htmlContent, null)
         }
@@ -86,11 +86,19 @@ class Query : AutoCloseable {
         }
     }
 
+    /**
+     * @param query the search query to run on twitter, as compiled with the Twitter Advanced Search
+     * @param limit the maximum number of tweets to attempt to retrieve, though more or fewer can be returned depending on dates and pool size (defaults to unlimited)
+     * @param startDate the date to start searching for tweets (defaults to Twitter's creation date)
+     * @param endDate the date to end searching for tweets (defaults to the current date)
+     * @param maxPoolSize the maximum number of separate searches to carry out for tweets (defaults to 20 but can be fewer depending on date selection)
+     * @return A list of Tweet objects matching the search criteria
+     */
     suspend fun queryTweets(query: String,
                             limit: Int? = null,
                             startDate: LocalDate = LocalDate.of(2006, 3, 21),
                             endDate: LocalDate = LocalDate.now(),
-                            maxPoolSize: Int = 20){
+                            maxPoolSize: Int = 20): List<Tweet> {
 
 
 
@@ -119,11 +127,9 @@ class Query : AutoCloseable {
             results = jobs.awaitAll().flatten()
         }
 
-        println(results)
-
         println("Found ${results.size} results")
 
-
+        return results
     }
 
     override fun close() {

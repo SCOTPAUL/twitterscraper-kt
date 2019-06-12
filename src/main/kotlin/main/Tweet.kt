@@ -3,6 +3,12 @@ package main
 import org.jsoup.Jsoup
 import java.time.Instant
 
+/**
+ * @property user the username of the user who posted the tweet (i.e. the @ name)
+ * @property timestamp the Instant that the tweet was posted
+ * @property text the textual content of the tweet
+ * @property id the unique identifier of the tweet
+ */
 data class Tweet(val user: String,
                 val timestamp: Instant,
                 val text: String,
@@ -21,10 +27,7 @@ data class Tweet(val user: String,
 
                     Tweet(user, timestamp, text, id)
                 }
-
-
             }
-
         }
     }
 }
