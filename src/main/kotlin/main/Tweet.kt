@@ -4,6 +4,8 @@ import org.jsoup.Jsoup
 import java.time.Instant
 
 /**
+ * Representation of a Tweet
+ *
  * @property user the username of the user who posted the tweet (i.e. the @ name)
  * @property timestamp the Instant that the tweet was posted
  * @property text the textual content of the tweet

@@ -12,6 +12,9 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit.DAYS
 import java.util.concurrent.CompletableFuture
 
+/**
+ * Allows for text queries to be made to Twitter
+ */
 class Query : AutoCloseable {
 
     private val logger = LoggerFactory.getLogger(Query::class.java)
