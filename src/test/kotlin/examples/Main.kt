@@ -3,7 +3,6 @@ import kotlinx.coroutines.*
 import main.Query
 import main.Tweet
 
-
 fun main(){
 
     val query = Query()

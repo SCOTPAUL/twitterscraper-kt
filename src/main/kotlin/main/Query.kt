@@ -5,15 +5,19 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import kotlinx.coroutines.*
+import kotlinx.coroutines.future.future
+import org.slf4j.LoggerFactory
 import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit.DAYS
+import java.util.concurrent.CompletableFuture
 
 class Query : AutoCloseable {
 
-    private data class TwitterJsonResponse(val items_html: String, val min_position: String?)
-
+    private val logger = LoggerFactory.getLogger(Query::class.java)
     private val client = HttpClient()
+
+    private data class TwitterJsonResponse(val items_html: String, val min_position: String?)
 
     private fun makeQueryUrl(query: String, pos: String? = null): String {
         if(pos != null){
@@ -32,7 +36,7 @@ class Query : AutoCloseable {
         val url = makeQueryUrl(singleQuery, pos)
 
 
-        println(url)
+        logger.info(url)
 
 
         val htmlContent = client.get<String>(url) {
@@ -59,7 +63,7 @@ class Query : AutoCloseable {
     }
 
     private suspend fun queryTweetsOnce(singleQuery: String, limit: Int? = null, pos: String? = null): List<Tweet> {
-        println("Querying $singleQuery")
+        logger.info("Querying $singleQuery")
 
         var currPos = pos
         val tweets = mutableListOf<Tweet>()
@@ -71,7 +75,7 @@ class Query : AutoCloseable {
 
             if(newTweets.isNotEmpty()){
                 tweets.addAll(newTweets)
-                println("Added ${newTweets.size} new tweets")
+                logger.info("Added ${newTweets.size} new tweets")
             }
             else {
                 return tweets
@@ -84,6 +88,14 @@ class Query : AutoCloseable {
                 return tweets
             }
         }
+    }
+
+    fun queryTweetsAsync(query: String,
+                            limit: Int? = null,
+                            startDate: LocalDate = LocalDate.of(2006, 3, 21),
+                            endDate: LocalDate = LocalDate.now(),
+                            maxPoolSize: Int = 20): CompletableFuture<List<Tweet>> {
+        return GlobalScope.future { queryTweets(query, limit, startDate, endDate, maxPoolSize) }
     }
 
     /**
@@ -110,24 +122,24 @@ class Query : AutoCloseable {
 
         val limitPerPool = (limit?.div(poolSize))?.plus(1)
 
-        println("Limit per pool $limitPerPool")
+        logger.info("Limit per pool $limitPerPool")
 
         val queries = (dateRanges.dropLast(1) zip dateRanges.drop(1)).map { (since, until) -> "$query since:$since until:$until" }
 
-        println(queries)
+        logger.info("{}", queries)
 
         var results: List<Tweet> = emptyList()
         coroutineScope {
             val jobs = queries.map { q ->  async {
                     val tweets = queryTweetsOnce(q, limitPerPool)
-                    println("Result for query: $q is $tweets")
+                    logger.info("Result for query: $q is $tweets")
                     tweets
                 }
             }
             results = jobs.awaitAll().flatten()
         }
 
-        println("Found ${results.size} results")
+        logger.info("Found ${results.size} results")
 
         return results
     }
