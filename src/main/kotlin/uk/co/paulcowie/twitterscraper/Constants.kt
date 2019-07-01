@@ -1,4 +1,4 @@
-package main
+package uk.co.paulcowie.twitterscraper
 
 val USER_AGENTS = listOf(
     "Mozilla/5.0 (Windows; U; Windows NT 6.1; x64; fr; rv:1.9.2.13) Gecko/20101203 Firebird/3.6.13",

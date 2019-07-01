@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "uk.co.paulcowie"
-version = "0.0.3"
+version = "0.0.4"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -72,10 +72,10 @@ bintray {
 
     with(pkg){
         repo = "maven"
-        name = "twitterscraper-kt"
+        name = "uk.co.paulcowie.twitterscraper-kt"
 
         with(version) {
-            name = "0.0.3"
+            name = "0.0.4"
             released  = Date().toString()
         }
     }

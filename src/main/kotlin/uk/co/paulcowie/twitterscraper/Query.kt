@@ -1,4 +1,4 @@
-package main
+package uk.co.paulcowie.twitterscraper
 
 import com.beust.klaxon.Klaxon
 import io.ktor.client.HttpClient

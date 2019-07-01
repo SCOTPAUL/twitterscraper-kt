@@ -1,7 +1,7 @@
 package examples;
 
-import main.Query;
-import main.Tweet;
+import uk.co.paulcowie.twitterscraper.Query;
+import uk.co.paulcowie.twitterscraper.Tweet;
 
 import java.time.LocalDate;
 import java.util.List;

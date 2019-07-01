@@ -1,7 +1,7 @@
 package examples
 import kotlinx.coroutines.*
-import main.Query
-import main.Tweet
+import uk.co.paulcowie.twitterscraper.Query
+import uk.co.paulcowie.twitterscraper.Tweet
 
 fun main(){
 

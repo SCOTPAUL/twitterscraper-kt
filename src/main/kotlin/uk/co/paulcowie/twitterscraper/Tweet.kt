@@ -1,4 +1,4 @@
-package main
+package uk.co.paulcowie.twitterscraper
 
 import org.jsoup.Jsoup
 import java.time.Instant
