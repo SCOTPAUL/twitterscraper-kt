@@ -72,7 +72,7 @@ bintray {
 
     with(pkg){
         repo = "maven"
-        name = "uk.co.paulcowie.twitterscraper-kt"
+        name = "twitterscraper-kt"
 
         with(version) {
             name = "0.0.4"
