@@ -1,16 +1,16 @@
-uk.co.paulcowie.twitterscraper-kt
+twitterscraper-kt
 =================
 
-A port of [uk.co.paulcowie.twitterscraper](https://github.com/taspinar/uk.co.paulcowie.twitterscraper) to the JVM.
+A port of [twitterscraper](https://github.com/taspinar/twitterscraper) to the JVM.
 
-Only provides a subset of the functionality of the original uk.co.paulcowie.twitterscraper, to allow text from a tweet search to be returned.
+Only provides a subset of the functionality of the original twitterscraper, to allow text from a tweet search to be returned.
 
 ## Example Usage
 
 ### Kotlin
 
 ```kotlin
-fun uk.co.paulcowie.twitterscraper(){
+fun main(){
     val query = Query()
     var results: List<Tweet>? = null
     query.use {
@@ -29,7 +29,7 @@ fun uk.co.paulcowie.twitterscraper(){
 
 ```java
 public class Main {
-    public static void uk.co.paulcowie.twitterscraper(String[] args) {
+    public static void main(String[] args) {
         try(Query query = new Query()){
             CompletableFuture<List<Tweet>> future = query.queryTweetsAsync("\"is cancelled\" FROM:daftlimmy",
                     20000,
